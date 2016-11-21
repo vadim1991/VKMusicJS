@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <context:component-scan base-package="com.vkmusic"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/configs/vkconfig.properties</value>
+                <value>/WEB-INF/configs/mongodb.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jsonObject" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+    <bean id="vkConfig" class="com.vkmusic.entity.AuthenticationConfig">
+        <property name="vkClientID" value="${vk.client.id}"/>
+        <property name="vkClientSecret" value="${vk.client.secret}"/>
+    </bean>
+
+    <import resource="mongodb-app.xml"></import>
+    <import resource="security/security.xml"></import>
+
+</beans>
